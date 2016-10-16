@@ -2,26 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Misc on Tzach Solomon&#39;s Blog</title>
-    <link>http://tzachs.github.io/categories/misc/</link>
+    <link>https://tzachs.github.io/categories/misc/</link>
     <description>Recent content in Misc on Tzach Solomon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Oct 2016 22:41:34 +0300</lastBuildDate>
-    <atom:link href="http://tzachs.github.io/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 16 Oct 2016 23:50:12 +0300</lastBuildDate>
+    <atom:link href="https://tzachs.github.io/categories/misc/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>about</title>
-      <link>http://tzachs.github.io/about/</link>
-      <pubDate>Sun, 16 Oct 2016 22:41:34 +0300</pubDate>
+      <title>2016 10 16 23 50 Hugo On Ubuntu</title>
+      <link>https://tzachs.github.io/post/2016-10-16-23-50-Hugo-On-Ubuntu/</link>
+      <pubDate>Sun, 16 Oct 2016 23:50:12 +0300</pubDate>
       
-      <guid>http://tzachs.github.io/about/</guid>
-      <description>
+      <guid>https://tzachs.github.io/post/2016-10-16-23-50-Hugo-On-Ubuntu/</guid>
+      <description>&lt;p&gt;It took me sometime to understand how to use hugo and the site that helped me the most, besides my good friend Erik Zaadi (Check out his amazing blog at &lt;a href=&#34;http://erikzaadi.com/&#34;&gt;http://erikzaadi.com/&lt;/a&gt;), was this site: &lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-install-and-use-hugo-a-static-site-generator-on-ubuntu-14-04&#34;&gt;https://www.digitalocean.com/community/tutorials/how-to-install-and-use-hugo-a-static-site-generator-on-ubuntu-14-04&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;hello and welcome to my site&lt;/p&gt;
-
-&lt;h2 id=&#34;a-bit-about-me:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;A bit about me&lt;/h2&gt;
-
-&lt;p&gt;this is a bit about me&lt;/p&gt;
+&lt;p&gt;I totally recommend it in case you are thinking of using Hugo&lt;/p&gt;
 </description>
     </item>
     
