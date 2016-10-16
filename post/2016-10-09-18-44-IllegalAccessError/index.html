@@ -1,0 +1,242 @@
+<html lang="en">
+<head>
+
+  
+  <meta charset="utf-8">
+  <title>IllegalAccessError - Using URLClassLoader and package private methods</title>
+  <meta name="description" content="IllegalAccessError - Using URLClassLoader and package private methods">
+  <meta name="author" content="">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://tzachs.github.io/css/fonts.css">
+  
+  
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+  
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+  <link rel="stylesheet" href="http://tzachs.github.io/css/custom.css">
+
+  
+  
+  <link rel="stylesheet" href="http://tzachs.github.io/highlight/styles/default.css">
+  
+  <script src="http://tzachs.github.io/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+<body>
+
+
+<div class="header pure-g">
+    <div class="pure-u-1-24 pure-u-md-5-24"></div>
+    <div class="pure-u-11-12 pure-u-md-5-8">
+        <div class="desktop pure-menu pure-menu-horizontal nav-menu">
+            
+            <a href="http://tzachs.github.io/" class="site-title pure-menu-heading">Tzach Solomon&#39;s Blog</a>
+            <ul class="pure-menu-list">
+                
+                <li class="pure-menu-item">
+                    <a href="http://tzachs.github.io/about/" class="pure-menu-link">About</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mobile pure-menu nav-menu">
+            <a href="/" class="pure-menu-heading" id="toggle-home">Tzach Solomon&#39;s Blog</a>
+            <a href="#" id="toggle-btn">&#9776;</a>
+            <ul class="pure-menu-list" id="toggle-content" style="display:none;">
+                
+                
+                <li class="pure-menu-item">
+                    <a href="http://tzachs.github.io/about" class="pure-menu-link">About</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="pure-u-1-24 pure-u-md-1-6"></div>
+</div>
+
+
+<div class="pure-g">
+    <div class="pure-u-1-24 pure-u-md-5-24"></div>
+	<div class="pure-u-11-12 pure-u-md-5-8">
+        <div class="post">
+
+            <div class="post-title">
+                <p class="footnote">
+                    <time class="">2016-09-10</time>
+		            
+                    
+                    
+
+                    
+
+                    
+                </p>
+                <h1>IllegalAccessError - Using URLClassLoader and package private methods</h1>
+            </div>
+
+            <div class="post-content">
+                
+
+<p>When working with URLClassLoader, one of the things we need to watch for, is the &lsquo;run-time packages&rsquo;.
+According to Java spec, a class is determined by it&rsquo;s binary name and it&rsquo;s class loader. Meaning, the class &lsquo;signature&rsquo; is the binary name and the class loader used to load it.</p>
+
+<p>Once loaded, each class belongs to a single <em>run-time</em> package.</p>
+
+<p><a href="https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.3">https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.3</a></p>
+
+<blockquote>
+<p>At run time, a class or interface is determined not by its name alone, but by a pair: its binary name and its defining class loader. Each such class or interface belongs to a single run-time package. The run-time package of a class or interface is determined by the package name and defining class loader of the class or interface.</p>
+</blockquote>
+
+<p>To demonstrate this problem (which I&rsquo;ve encountered at work ofcourse), I&rsquo;ve created the following example.</p>
+
+<p>Full code is at <a href="https://github.com/tzachs/IllegalAccessErrorExample">https://github.com/tzachs/IllegalAccessErrorExample</a></p>
+
+<h1 id="example-explained:bbdb1ba42f46d4ef55566099e79b1ea5">Example explained</h1>
+
+<p>I&rsquo;ve created 3 modules (using maven) named IllegalAccessErrorA, IllegalAccessErrorB, IllegalAccessErrorC.</p>
+
+<ul>
+<li><p>IllegalAccessErrorA module</p>
+
+<ul>
+<li>Has one class named IllegalAccessErrorA under package com.tzach.example</li>
+<li>Has compile time dependency on module IllegalAccessErrorC</li>
+<li>Packaged with module IllegalAccessErrorC</li>
+<li>The sole purpose of IllegalAccessErrorA is to load module IllegalAccessErrorB using reflection and invoking a method in that module (the method can be usePrivatePackage or usePublic)</li>
+</ul></li>
+
+<li><p>IllegalAccessErrorB module</p>
+
+<ul>
+<li>Has one class named IllegalAccessErrorB under package com.tzach.example</li>
+<li>As IllegalAccessErrorA, has compile time dependency on IllegalAccessErrorC</li>
+<li>Packaged with module IllegalAccessErrorC</li>
+<li>Has 3 functions:
+
+<ul>
+<li>main() - calling new IllegalAccessErrorC().usePrivatePackage()</li>
+<li>usePackagePrivate() - calling new IllegalAccessErrorC().usePrivatePackage();</li>
+<li>usePublic() - calling new IllegalAccessErrorC().usePublic();</li>
+</ul></li>
+</ul></li>
+
+<li><p>IllegalAccessErrorC module</p>
+
+<ul>
+<li>Has one class named IllegalAccessErrorC under package com.tzach.example</li>
+<li>Has 2 methods:
+
+<ul>
+<li>void usePrivatePackage()</li>
+<li>public void usePublic()</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<p>Both IllegalAccessErrorA and IllegalAccessErrorB have legal calls to IllegalAccessErrorC since they are in the same package.
+If you run IllegalAccessErrorB module by itself, no error will be thrown by the JVM since both IllegalAccessErrorB and IllegalAccessErrorC classes are in the same <strong>run-time package</strong>, <strong>BUT</strong>, when running <strong>IllegalAccessErrorA</strong> module, using the argument <strong>usePackagePrivate</strong>, we get  <strong>IllegalAccessError</strong> thrown.</p>
+
+<div class="highlight" style="background: #202020"><pre style="line-height: 125%"><span></span><span style="color: #d0d0d0">C:</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">Work</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">IllegalAccessErrorExample</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">IllegalAccessErrorA&gt;java</span> <span style="color: #d0d0d0">-jar</span> <span style="color: #d0d0d0">target</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">IllegalAccessErrorA-</span><span style="color: #3677a9">1.0</span><span style="color: #d0d0d0">-SNAPSHOT-jar-with-dependencies.</span><span style="color: #bbbbbb">jar</span> <span style="color: #d0d0d0">..</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">Illegal</span>
+<span style="color: #d0d0d0">AccessErrorB</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">target</span> <span style="color: #d0d0d0">usePackagePrivate</span>
+<span style="color: #d0d0d0">Exception</span> <span style="color: #d0d0d0">in</span> <span style="color: #d0d0d0">thread</span> <span style="color: #ed9d13">&quot;main&quot;</span> <span style="color: #d0d0d0">java.</span><span style="color: #bbbbbb">lang</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">reflect</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">InvocationTargetException</span>
+        <span style="color: #d0d0d0">at</span> <span style="color: #d0d0d0">sun.</span><span style="color: #bbbbbb">reflect</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">NativeMethodAccessorImpl</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">invoke0</span><span style="color: #d0d0d0">(Native</span> <span style="color: #d0d0d0">Method)</span>
+        <span style="color: #d0d0d0">at</span> <span style="color: #d0d0d0">sun.</span><span style="color: #bbbbbb">reflect</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">NativeMethodAccessorImpl</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">invoke</span><span style="color: #d0d0d0">(Unknown</span> <span style="color: #d0d0d0">Source)</span>
+        <span style="color: #d0d0d0">at</span> <span style="color: #d0d0d0">sun.</span><span style="color: #bbbbbb">reflect</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">DelegatingMethodAccessorImpl</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">invoke</span><span style="color: #d0d0d0">(Unknown</span> <span style="color: #d0d0d0">Source)</span>
+        <span style="color: #d0d0d0">at</span> <span style="color: #d0d0d0">java.</span><span style="color: #bbbbbb">lang</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">reflect</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">Method</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">invoke</span><span style="color: #d0d0d0">(Unknown</span> <span style="color: #d0d0d0">Source)</span>
+        <span style="color: #d0d0d0">at</span> <span style="color: #d0d0d0">com.</span><span style="color: #bbbbbb">tzach</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">example</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">IllegalAccessErrorA</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">main</span><span style="color: #d0d0d0">(IllegalAccessErrorA.</span><span style="color: #bbbbbb">java</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">51</span><span style="color: #d0d0d0">)</span>
+<span style="color: #d0d0d0">Caused</span> <span style="color: #d0d0d0">by:</span> <span style="color: #d0d0d0">java.</span><span style="color: #bbbbbb">lang</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">IllegalAccessError</span><span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">tried</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">access</span> <span style="color: #d0d0d0">method</span> <span style="color: #d0d0d0">com.</span><span style="color: #bbbbbb">tzach</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">example</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">IllegalAccessErrorC</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">usePrivatePackage</span><span style="color: #d0d0d0">()V</span> <span style="color: #d0d0d0">from</span> <span style="color: #6ab825; font-weight: bold">class</span> <span style="color: #447fcf; text-decoration: underline">com</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">tz</span>
+<span style="color: #d0d0d0">ach.</span><span style="color: #bbbbbb">example</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">IllegalAccessErrorB</span>
+        <span style="color: #d0d0d0">at</span> <span style="color: #d0d0d0">com.</span><span style="color: #bbbbbb">tzach</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">example</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">IllegalAccessErrorB</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">usePackagePrivate</span><span style="color: #d0d0d0">(IllegalAccessErrorB.</span><span style="color: #bbbbbb">java</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">19</span><span style="color: #d0d0d0">)</span>
+        <span style="color: #d0d0d0">...</span> <span style="color: #3677a9">5</span> <span style="color: #d0d0d0">more</span>
+</pre></div>
+
+
+<p>Why is that? Well, the module IllegalAccessErrorB was loaded through a child URLClassLoader by module IllegalAccessErrorA.
+Meaning, the class IllegalAccessErrorB is in a different <strong>run-time</strong> package than IllegalAccessErrorC which was loaded when the
+program started, using the Application Class Loader.</p>
+
+<p>This violates the &lsquo;accessibility&rsquo; rule, thus, we get IllegalAccessError <a href="https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.4">https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.4</a></p>
+
+<blockquote>
+<p>A class or interface C is accessible to a class or interface D if and only if either of the following conditions is true:
+C and D are members of the same run-time package</p>
+</blockquote>
+
+<p><strong>NOTICE</strong></p>
+
+<p>Running the IllegalAccessErrorA with the argument usePublic, will run okay, since both methods are in the <strong>runtime package</strong></p>
+
+<p><div class="highlight" style="background: #202020"><pre style="line-height: 125%"><span></span><span style="color: #d0d0d0">C:</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">Work</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">IllegalAccessErrorExample</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">IllegalAccessErrorA&gt;java</span> <span style="color: #d0d0d0">-jar</span> <span style="color: #d0d0d0">target</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">IllegalAccessErrorA-</span><span style="color: #3677a9">1.0</span><span style="color: #d0d0d0">-SNAPSHOT-jar-with-dependencies.</span><span style="color: #bbbbbb">jar</span> <span style="color: #d0d0d0">..</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">Illegal</span>
+<span style="color: #d0d0d0">AccessErrorB</span><span style="color: #a61717; background-color: #e3d2d2">\</span><span style="color: #d0d0d0">target</span> <span style="color: #d0d0d0">usePublic</span>
+<span style="color: #d0d0d0">Ignore</span> <span style="color: #d0d0d0">the</span> <span style="color: #d0d0d0">next</span> <span style="color: #d0d0d0">line</span> <span style="color: #d0d0d0">since</span> <span style="color: #d0d0d0">we</span> <span style="color: #d0d0d0">called</span> <span style="color: #d0d0d0">it</span> <span style="color: #d0d0d0">from</span> <span style="color: #d0d0d0">a</span> <span style="color: #6ab825; font-weight: bold">public</span> <span style="color: #d0d0d0">method</span>
+<span style="color: #d0d0d0">You</span> <span style="color: #d0d0d0">are</span> <span style="color: #d0d0d0">calling</span> <span style="color: #6ab825; font-weight: bold">package</span> <span style="color: #447fcf; text-decoration: underline">private</span> <span style="color: #d0d0d0">method!</span>
+</pre></div>
+</p>
+
+<h1 id="in-conclusion:bbdb1ba42f46d4ef55566099e79b1ea5">In conclusion</h1>
+
+<p>When writing package private method, keep in mind that those classes are not to be used by reflection. If so, you need to wrap those methods with a public method.</p>
+
+            </div>
+        </div>
+	</div>
+    <div class="pure-u-1-24 pure-u-md-1-6"></div>
+</div>
+
+<div class="footer pure-g">
+    <div class="pure-u-1-24 pure-u-md-5-24"></div>
+    <div class="pure-u-11-12 pure-u-md-5-8">
+        <div class="pure-menu pure-menu-horizontal footer-content">
+            <ul>
+                <li class="pure-menu-heading" id="foot-name">:</li>
+
+                
+
+                
+
+                
+
+                
+
+                
+
+            </ul>
+            <a href="#" class="pure-menu-heading pull-right" id="gototop-btn">↑↑</a>
+        </div>
+	  </div>
+      <div class="pure-u-1-24 pure-u-md-1-6"></div>
+</div>
+
+
+<script src="http://tzachs.github.io/js/jquery.min.js" type="text/javascript"></script>
+<script src="http://tzachs.github.io/js/jquery.timeago.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function(){
+    $("time.timeago").timeago();
+  })
+  $("#toggle-btn").click(function(){
+    $("#toggle-content").toggle();
+    if($(this).html() === "☰") {
+        $(this).html("X")
+    } else {
+        $(this).html("☰")
+    }
+  });
+  $(window).resize(function(){
+    if(window.innerWidth > 768) {
+      $(".desktop").removeAttr("style");
+    }
+  });
+</script>
+
+</body>
+</html>
+
