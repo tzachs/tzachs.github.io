@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tzach Solomon&#39;s Blog</title>
-    <link>https://tzachs.github.io/</link>
-    <description>Recent content on Tzach Solomon&#39;s Blog</description>
+    <title>Tzach Solomon&#39;s Blog on Tzach Solomon&#39;s Blog</title>
+    <link>https://tzachs.github.io/index.xml</link>
+    <description>Recent content in Tzach Solomon&#39;s Blog on Tzach Solomon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 16 Oct 2016 23:50:12 +0300</lastBuildDate>
-    <atom:link href="https://tzachs.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Hugo On Ubuntu</title>
@@ -15,10 +15,8 @@
       <pubDate>Sun, 16 Oct 2016 23:50:12 +0300</pubDate>
       
       <guid>https://tzachs.github.io/post/2016-10-16-23-50-Hugo-On-Ubuntu/</guid>
-      <description>&lt;p&gt;It took me sometime to understand how to use hugo and the site that helped me the most, besides my good friend Erik Zaadi (Check out his amazing blog at &lt;a href=&#34;http://erikzaadi.com/&#34;&gt;http://erikzaadi.com/&lt;/a&gt;), was this site: &lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-install-and-use-hugo-a-static-site-generator-on-ubuntu-14-04&#34;&gt;https://www.digitalocean.com/community/tutorials/how-to-install-and-use-hugo-a-static-site-generator-on-ubuntu-14-04&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;I totally recommend it in case you are thinking of using Hugo&lt;/p&gt;
-</description>
+      <description>It took me sometime to understand how to use hugo and the site that helped me the most, besides my good friend Erik Zaadi (Check out his amazing blog at http://erikzaadi.com/), was this site: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-hugo-a-static-site-generator-on-ubuntu-14-04
+I totally recommend it in case you are thinking of using Hugo</description>
     </item>
     
     <item>
@@ -27,8 +25,7 @@
       <pubDate>Sun, 16 Oct 2016 22:41:34 +0300</pubDate>
       
       <guid>https://tzachs.github.io/about/</guid>
-      <description>&lt;p&gt;Hello and welcome to my blog&lt;/p&gt;
-</description>
+      <description>Hello and welcome to my blog</description>
     </item>
     
     <item>
@@ -37,109 +34,10 @@
       <pubDate>Sat, 10 Sep 2016 00:00:00 +0000</pubDate>
       
       <guid>https://tzachs.github.io/post/2016-10-09-18-44-IllegalAccessError/</guid>
-      <description>
-
-&lt;p&gt;When working with URLClassLoader, one of the things we need to watch for, is the &amp;lsquo;run-time packages&amp;rsquo;.
-According to Java spec, a class is determined by it&amp;rsquo;s binary name and it&amp;rsquo;s class loader. Meaning, the class &amp;lsquo;signature&amp;rsquo; is the binary name and the class loader used to load it.&lt;/p&gt;
-
-&lt;p&gt;Once loaded, each class belongs to a single &lt;em&gt;run-time&lt;/em&gt; package.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.3&#34;&gt;https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.3&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;At run time, a class or interface is determined not by its name alone, but by a pair: its binary name and its defining class loader. Each such class or interface belongs to a single run-time package. The run-time package of a class or interface is determined by the package name and defining class loader of the class or interface.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;To demonstrate this problem (which I&amp;rsquo;ve encountered at work ofcourse), I&amp;rsquo;ve created the following example.&lt;/p&gt;
-
-&lt;p&gt;Full code is at &lt;a href=&#34;https://github.com/tzachs/IllegalAccessErrorExample&#34;&gt;https://github.com/tzachs/IllegalAccessErrorExample&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;example-explained:bbdb1ba42f46d4ef55566099e79b1ea5&#34;&gt;Example explained&lt;/h1&gt;
-
-&lt;p&gt;I&amp;rsquo;ve created 3 modules (using maven) named IllegalAccessErrorA, IllegalAccessErrorB, IllegalAccessErrorC.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;IllegalAccessErrorA module&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Has one class named IllegalAccessErrorA under package com.tzach.example&lt;/li&gt;
-&lt;li&gt;Has compile time dependency on module IllegalAccessErrorC&lt;/li&gt;
-&lt;li&gt;Packaged with module IllegalAccessErrorC&lt;/li&gt;
-&lt;li&gt;The sole purpose of IllegalAccessErrorA is to load module IllegalAccessErrorB using reflection and invoking a method in that module (the method can be usePrivatePackage or usePublic)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;IllegalAccessErrorB module&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Has one class named IllegalAccessErrorB under package com.tzach.example&lt;/li&gt;
-&lt;li&gt;As IllegalAccessErrorA, has compile time dependency on IllegalAccessErrorC&lt;/li&gt;
-&lt;li&gt;Packaged with module IllegalAccessErrorC&lt;/li&gt;
-&lt;li&gt;Has 3 functions:
-
-&lt;ul&gt;
-&lt;li&gt;main() - calling new IllegalAccessErrorC().usePrivatePackage()&lt;/li&gt;
-&lt;li&gt;usePackagePrivate() - calling new IllegalAccessErrorC().usePrivatePackage();&lt;/li&gt;
-&lt;li&gt;usePublic() - calling new IllegalAccessErrorC().usePublic();&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;IllegalAccessErrorC module&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Has one class named IllegalAccessErrorC under package com.tzach.example&lt;/li&gt;
-&lt;li&gt;Has 2 methods:
-
-&lt;ul&gt;
-&lt;li&gt;void usePrivatePackage()&lt;/li&gt;
-&lt;li&gt;public void usePublic()&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Both IllegalAccessErrorA and IllegalAccessErrorB have legal calls to IllegalAccessErrorC since they are in the same package.
-If you run IllegalAccessErrorB module by itself, no error will be thrown by the JVM since both IllegalAccessErrorB and IllegalAccessErrorC classes are in the same &lt;strong&gt;run-time package&lt;/strong&gt;, &lt;strong&gt;BUT&lt;/strong&gt;, when running &lt;strong&gt;IllegalAccessErrorA&lt;/strong&gt; module, using the argument &lt;strong&gt;usePackagePrivate&lt;/strong&gt;, we get  &lt;strong&gt;IllegalAccessError&lt;/strong&gt; thrown.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #202020&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;C:&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;Work&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;IllegalAccessErrorExample&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;IllegalAccessErrorA&amp;gt;java&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;-jar&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;target&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;IllegalAccessErrorA-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-SNAPSHOT-jar-with-dependencies.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;jar&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;..&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;Illegal&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;AccessErrorB&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;target&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;usePackagePrivate&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;Exception&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;thread&lt;/span&gt; &lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;main&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;java.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;lang&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;reflect&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;InvocationTargetException&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;at&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;sun.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;reflect&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;NativeMethodAccessorImpl&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;invoke0&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(Native&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Method)&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;at&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;sun.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;reflect&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;NativeMethodAccessorImpl&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;invoke&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(Unknown&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Source)&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;at&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;sun.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;reflect&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;DelegatingMethodAccessorImpl&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;invoke&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(Unknown&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Source)&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;at&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;java.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;lang&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;reflect&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;Method&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;invoke&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(Unknown&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Source)&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;at&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;com.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;tzach&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;example&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;IllegalAccessErrorA&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(IllegalAccessErrorA.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;java&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;51&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;Caused&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;by:&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;java.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;lang&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;IllegalAccessError&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;tried&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;access&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;method&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;com.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;tzach&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;example&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;IllegalAccessErrorC&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;usePrivatePackage&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;()V&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;com&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;tz&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;ach.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;example&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;IllegalAccessErrorB&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;at&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;com.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;tzach&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;example&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;IllegalAccessErrorB&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;usePackagePrivate&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(IllegalAccessErrorB.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;java&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;19&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;...&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;more&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Why is that? Well, the module IllegalAccessErrorB was loaded through a child URLClassLoader by module IllegalAccessErrorA.
-Meaning, the class IllegalAccessErrorB is in a different &lt;strong&gt;run-time&lt;/strong&gt; package than IllegalAccessErrorC which was loaded when the
-program started, using the Application Class Loader.&lt;/p&gt;
-
-&lt;p&gt;This violates the &amp;lsquo;accessibility&amp;rsquo; rule, thus, we get IllegalAccessError &lt;a href=&#34;https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.4&#34;&gt;https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.4.4&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;A class or interface C is accessible to a class or interface D if and only if either of the following conditions is true:
-C and D are members of the same run-time package&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;NOTICE&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Running the IllegalAccessErrorA with the argument usePublic, will run okay, since both methods are in the &lt;strong&gt;runtime package&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #202020&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;C:&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;Work&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;IllegalAccessErrorExample&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;IllegalAccessErrorA&amp;gt;java&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;-jar&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;target&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;IllegalAccessErrorA-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;1.0&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-SNAPSHOT-jar-with-dependencies.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;jar&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;..&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;Illegal&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;AccessErrorB&lt;/span&gt;&lt;span style=&#34;color: #a61717; background-color: #e3d2d2&#34;&gt;\&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;target&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;usePublic&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;Ignore&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;the&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;next&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;line&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;since&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;we&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;called&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;it&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;from&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;a&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;method&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;You&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;are&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;calling&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;method!&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
-
-&lt;h1 id=&#34;in-conclusion:bbdb1ba42f46d4ef55566099e79b1ea5&#34;&gt;In conclusion&lt;/h1&gt;
-
-&lt;p&gt;When writing package private method, keep in mind that those classes are not to be used by reflection. If so, you need to wrap those methods with a public method.&lt;/p&gt;
-</description>
+      <description>When working with URLClassLoader, one of the things we need to watch for, is the &amp;lsquo;run-time packages&amp;rsquo;. According to Java spec, a class is determined by it&amp;rsquo;s binary name and it&amp;rsquo;s class loader. Meaning, the class &amp;lsquo;signature&amp;rsquo; is the binary name and the class loader used to load it.
+Once loaded, each class belongs to a single run-time package.
+https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.3
+ At run time, a class or interface is determined not by its name alone, but by a pair: its binary name and its defining class loader.</description>
     </item>
     
     <item>
@@ -148,14 +46,9 @@ C and D are members of the same run-time package&lt;/p&gt;
       <pubDate>Wed, 10 Aug 2016 00:00:00 +0000</pubDate>
       
       <guid>https://tzachs.github.io/post/2016-10-08-18-00-Moving-to-github/</guid>
-      <description>&lt;p&gt;Hi there,&lt;/p&gt;
-
-&lt;p&gt;This is my first post using Github as a place to host my blog.
-Till now I&amp;rsquo;ve been hosting it using Blogger, but, Blogger is missing a main feature I need which is code blocks.&lt;/p&gt;
-
-&lt;p&gt;So, after getting a lot of recommendations from a friend about Hugo (See at &lt;a href=&#34;https://gohugo.io/tutorials/github-pages-blog/&#34;&gt;https://gohugo.io/tutorials/github-pages-blog/&lt;/a&gt;)
-I&amp;rsquo;ve switched.&lt;/p&gt;
-</description>
+      <description>Hi there,
+This is my first post using Github as a place to host my blog. Till now I&amp;rsquo;ve been hosting it using Blogger, but, Blogger is missing a main feature I need which is code blocks.
+So, after getting a lot of recommendations from a friend about Hugo (See at https://gohugo.io/tutorials/github-pages-blog/) I&amp;rsquo;ve switched.</description>
     </item>
     
   </channel>

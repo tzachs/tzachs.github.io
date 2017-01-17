@@ -2,12 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Misc on Tzach Solomon&#39;s Blog</title>
-    <link>https://tzachs.github.io/categories/misc/</link>
+    <link>https://tzachs.github.io/categories/misc/index.xml</link>
     <description>Recent content in Misc on Tzach Solomon&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Oct 2016 23:50:12 +0300</lastBuildDate>
-    <atom:link href="https://tzachs.github.io/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/categories/misc/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Hugo On Ubuntu</title>
@@ -15,10 +14,8 @@
       <pubDate>Sun, 16 Oct 2016 23:50:12 +0300</pubDate>
       
       <guid>https://tzachs.github.io/post/2016-10-16-23-50-Hugo-On-Ubuntu/</guid>
-      <description>&lt;p&gt;It took me sometime to understand how to use hugo and the site that helped me the most, besides my good friend Erik Zaadi (Check out his amazing blog at &lt;a href=&#34;http://erikzaadi.com/&#34;&gt;http://erikzaadi.com/&lt;/a&gt;), was this site: &lt;a href=&#34;https://www.digitalocean.com/community/tutorials/how-to-install-and-use-hugo-a-static-site-generator-on-ubuntu-14-04&#34;&gt;https://www.digitalocean.com/community/tutorials/how-to-install-and-use-hugo-a-static-site-generator-on-ubuntu-14-04&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;I totally recommend it in case you are thinking of using Hugo&lt;/p&gt;
-</description>
+      <description>It took me sometime to understand how to use hugo and the site that helped me the most, besides my good friend Erik Zaadi (Check out his amazing blog at http://erikzaadi.com/), was this site: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-hugo-a-static-site-generator-on-ubuntu-14-04
+I totally recommend it in case you are thinking of using Hugo</description>
     </item>
     
   </channel>
