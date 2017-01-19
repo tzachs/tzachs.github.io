@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on Tzach Solomon&#39;s Blog</title>
+    <link>https://tzachs.github.io/categories/java/index.xml</link>
+    <description>Recent content in Java on Tzach Solomon&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>IllegalAccessError - Using URLClassLoader and package private methods</title>
+      <link>https://tzachs.github.io/post/2016-10-09-18-44-IllegalAccessError/</link>
+      <pubDate>Sat, 10 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://tzachs.github.io/post/2016-10-09-18-44-IllegalAccessError/</guid>
+      <description>When working with URLClassLoader, one of the things we need to watch for, is the &amp;lsquo;run-time packages&amp;rsquo;. According to Java spec, a class is determined by it&amp;rsquo;s binary name and it&amp;rsquo;s class loader. Meaning, the class &amp;lsquo;signature&amp;rsquo; is the binary name and the class loader used to load it.
+Once loaded, each class belongs to a single run-time package.
+https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-5.html#jvms-5.3
+ At run time, a class or interface is determined not by its name alone, but by a pair: its binary name and its defining class loader.</description>
+    </item>
+    
+  </channel>
+</rss>
