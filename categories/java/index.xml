@@ -9,6 +9,19 @@
     <atom:link href="/categories/java/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Passing params using Java Annotations</title>
+      <link>https://tzachs.github.io/post/2017-10-29-Using-annotations-to-pass-params/</link>
+      <pubDate>Sun, 29 Oct 2017 09:50:13 +0200</pubDate>
+      
+      <guid>https://tzachs.github.io/post/2017-10-29-Using-annotations-to-pass-params/</guid>
+      <description>Scenario:
+I needed a way to track down the path my program was going through and also, in each method that was tracked, to know the methods status (Passed or failed) and other meta data on the method&amp;hellip;
+First problem - How to track down the path of all the method?
+I&amp;rsquo;ve used the example from [https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html ]() to have a pre / post method.
+Second problem - How to get the meta data of the method?</description>
+    </item>
+    
+    <item>
       <title>IllegalAccessError - Using URLClassLoader and package private methods</title>
       <link>https://tzachs.github.io/post/2016-10-09-18-44-IllegalAccessError/</link>
       <pubDate>Sat, 10 Sep 2016 00:00:00 +0000</pubDate>
