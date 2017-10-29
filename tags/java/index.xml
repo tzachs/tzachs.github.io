@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on Tzach Solomon&#39;s Blog</title>
+    <link>https://tzachs.github.io/tags/java/index.xml</link>
+    <description>Recent content in Java on Tzach Solomon&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Passing params using Java Annotations</title>
+      <link>https://tzachs.github.io/post/2017-10-29-Using-annotations-to-pass-params/</link>
+      <pubDate>Sun, 29 Oct 2017 09:50:13 +0200</pubDate>
+      
+      <guid>https://tzachs.github.io/post/2017-10-29-Using-annotations-to-pass-params/</guid>
+      <description>Scenario:
+I needed a way to track down the path my program was going through and also, in each method that was tracked, to know the methods status (Passed or failed) and other meta data on the method&amp;hellip;
+First problem - How to track down the path of all the method?
+I&amp;rsquo;ve used the example from [https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html ]() to have a pre / post method.
+Second problem - How to get the meta data of the method?</description>
+    </item>
+    
+  </channel>
+</rss>

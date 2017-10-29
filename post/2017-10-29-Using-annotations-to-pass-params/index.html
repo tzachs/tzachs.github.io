@@ -16,7 +16,7 @@
     <script>hljs.initHighlightingOnLoad();</script>
     
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <title>Creating parameterized test python | Tzach Solomon&#39;s Blog</title>
+    <title>Passing params using Java Annotations | Tzach Solomon&#39;s Blog</title>
   </head>
   <body>
     <div id="wrap">
@@ -42,15 +42,15 @@ ga('send', 'pageview');
 <div class="article">
   <header>
     <div class="article-header">
-      <h1>Creating parameterized test python</h1>
+      <h1>Passing params using Java Annotations</h1>
       <div class="article-meta">
-        <span class="posttime">2017/05/03</span>
+        <span class="posttime">2017/10/29</span>
         
 <div class="tags">
   <ul>
     
     <li>
-        <a href="/tags/python-test-parameters-parameterized">python test parameters parameterized</a>
+        <a href="/tags/java">Java</a>
     </li>
     
   </ul>
@@ -63,16 +63,60 @@ ga('send', 'pageview');
 
   </header>
   <div class="content">
-    
+    <p><strong>Scenario:</strong></p>
 
-<h1 id="general">General</h1>
+<p>I needed a way to track down the path my program was going through and also, in each method that was tracked, to know the methods status (Passed or failed) and other meta data on the method&hellip;</p>
 
-<p>A friend asked if I know how to create a test in python that with parameters feeded into it from outside.
-From what I&rsquo;ve seen there is no possible way to do that. Instead what you could do is create a configuration file and read it your test.</p>
+<p><strong>First problem - How to track down the path of all the method?</strong></p>
 
-<h1 id="source-code">Source code</h1>
+<p>I&rsquo;ve used the example from [<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html">https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html</a> ]() to have a pre / post method.</p>
 
-<p>Check the source code and how to at <a href="https://github.com/tzachs/ParamTestPython">https://github.com/tzachs/ParamTestPython</a></p>
+<p><strong>Second problem - How to get the meta data of the method?</strong></p>
+
+<p>To track the methods, I&rsquo;ve created the annotation TrackThis.
+The Annoation for now has only 3 fields:<br />
+UniqueID<br />
+Tag - Meta Data I needed<br />
+Status - Passed or Failed</p>
+
+<p>In DebugProxy class, under invoke() method, I&rsquo;ve added the following code in finally section</p>
+
+<pre><code>Annotation[] annotations = obj.getClass().getDeclaredMethod(m.getName(), 	m.getParameterTypes()).getDeclaredAnnotations();
+	if (annotations.length &gt; 0) {
+	    Annotation a = annotations[0];
+	    if (a.annotationType() == TrackThis.class) {
+	        String tag = ((TrackThis) a).tag();
+	        String status = ((TrackThis) a).status();
+	        long uniqueID = ((TrackThis) a).uniqueID();
+	        System.out.println(String.format(&quot;%s, %s, %s&quot;,
+	                        tag, status, uniqueID));
+	    }
+	} else {
+		System.out.println(&quot;No annotations!&quot;);
+}
+</code></pre>
+
+<p>The code retrieves the annotation from the invoked method, and checks if the annoation type is TrackThis. If so it prints the meta data.</p>
+
+<p><strong>Third problem - How to change the valus of the annoation meta data?</strong></p>
+
+<p>To change the annoation value, I&rsquo;ve used the method changeAnnotationValue() in SimpleService.</p>
+
+<p><strong>Running Main</strong></p>
+
+<p>Running Main will give you the following output</p>
+
+<pre><code>Mouse, true, 1  
+Mouse, false, 1  
+Mouse, true, 11  
+Mouse, false, 11  
+Mouse, true, 10  
+Mouse, false, 10
+</code></pre>
+
+<p>As you can see, the status changed according to the current state of the method.</p>
+
+<p><strong>NOTICE</strong>: I&rsquo;ve used synchronized in DebugProxy there is only one instance of SimpleService class (if you don&rsquo;t use Singleton you probably don&rsquo;t have to use synchronized)</p>
 
   </div>
   <footer>
@@ -82,7 +126,7 @@ From what I&rsquo;ve seen there is no possible way to do that. Instead what you 
   <ul>
     
     <li>
-        <a href="/tags/python-test-parameters-parameterized">python test parameters parameterized</a>
+        <a href="/tags/java">Java</a>
     </li>
     
   </ul>
@@ -95,9 +139,9 @@ From what I&rsquo;ve seen there is no possible way to do that. Instead what you 
       <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'tzachs';
-    var disqus_identifier = 'https:\/\/tzachs.github.io\/post\/2017-05-03-20-45-Python-Parameterized-Test\/';
-    var disqus_title = 'Creating parameterized test python';
-    var disqus_url = 'https:\/\/tzachs.github.io\/post\/2017-05-03-20-45-Python-Parameterized-Test\/';
+    var disqus_identifier = 'https:\/\/tzachs.github.io\/post\/2017-10-29-Using-annotations-to-pass-params\/';
+    var disqus_title = 'Passing params using Java Annotations';
+    var disqus_url = 'https:\/\/tzachs.github.io\/post\/2017-10-29-Using-annotations-to-pass-params\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -112,14 +156,9 @@ From what I&rsquo;ve seen there is no possible way to do that. Instead what you 
         
         <div id="pagenavigation-next">
           <span class="pagenav-label">Previous</span>
-          <a href="https://tzachs.github.io/post/2016-10-16-23-50-Hugo-On-Ubuntu/">Hugo On Ubuntu</a>
+          <a href="https://tzachs.github.io/post/2017-05-03-20-45-Python-Parameterized-Test/">Creating parameterized test python</a>
         </div>
         
-        
-        <div id="pagenavigation-prev">
-          <span class="pagenav-label">Next</span>
-          <a href="https://tzachs.github.io/post/2017-10-29-Using-annotations-to-pass-params/">Passing params using Java Annotations</a>
-        </div>
         
       </div>
       
